@@ -1,0 +1,21 @@
+<!-- Why Aurocous Section -->
+<section class="section-why" id="why-aurocous">
+    <div class="container">
+        <div class="section-header" data-animate="fade-up">
+            <span class="section-label">WHY CHOOSE US</span>
+            <h2>Why Businesses Choose Aurocous.</h2>
+            <p class="section-intro">We bring business understanding and engineering discipline together to build technology that serves a clear purpose. Our focus is on delivering thoughtful solutions and building dependable working relationships.</p>
+        </div>
+        <div class="reasons-grid">
+            {% for reason in reasons %}
+            <div class="reason-card" data-animate="fade-up">
+                <div class="reason-icon">
+                    {{ reason.icon_svg|safe }}
+                </div>
+                <h3 class="reason-title">{{ reason.title }}</h3>
+                <p class="reason-description">{{ reason.description }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>

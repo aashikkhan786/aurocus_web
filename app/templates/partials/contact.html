@@ -1,0 +1,122 @@
+<!-- Contact Section -->
+<section class="section-contact" id="contact">
+    <div class="container">
+        <div class="section-header" data-animate="fade-up">
+            <span class="section-label">GET IN TOUCH</span>
+            <h2>Let's Build Something Meaningful.</h2>
+        </div>
+
+        {% if form_success %}
+        <div class="form-success" role="alert" data-animate="fade-up">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            <div>
+                <strong>Thank you for reaching out!</strong>
+                <p>Your inquiry has been submitted successfully. We'll get back to you within 24 hours.</p>
+            </div>
+        </div>
+        {% endif %}
+
+        <div class="contact-grid" data-animate="fade-up">
+            <div class="contact-info">
+                <h3>Start a Conversation</h3>
+                <p>Have a project in mind or a business challenge that needs a technology solution? Tell us what you're looking to build. Let's discuss how Aurocous can help turn your ideas into practical digital solutions.</p>
+
+                <div class="contact-detail">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                    <div>
+                        <span class="contact-detail-label">Email</span>
+                        <a href="mailto:info@aurocous.com">info@aurocous.com</a>
+                    </div>
+                </div>
+
+                <div class="contact-detail">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                    <div>
+                        <span class="contact-detail-label">Location</span>
+                        <span>India &bull; Worldwide</span>
+                    </div>
+                </div>
+
+                <div class="contact-detail">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                    <div>
+                        <span class="contact-detail-label">Reach</span>
+                        <span>Serving clients globally</span>
+                    </div>
+                </div>
+            </div>
+
+            <form class="contact-form" action="/contact" method="POST" novalidate>
+                <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+
+                <!-- Honeypot field — hidden from real users -->
+                <div class="honeypot-field" aria-hidden="true">
+                    <label for="website">Website</label>
+                    <input type="text" name="_honeypot" id="website" tabindex="-1" autocomplete="off">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="full_name">Full Name</label>
+                    <input class="form-input{% if form_errors and form_errors.full_name %} input-error{% endif %}" type="text" id="full_name" name="full_name" required placeholder="Your full name" value="{{ form_data.full_name if form_data and form_data.full_name else '' }}">
+                    {% if form_errors and form_errors.full_name %}
+                    <span class="form-error">{{ form_errors.full_name }}</span>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="business_email">Business Email</label>
+                    <input class="form-input{% if form_errors and form_errors.business_email %} input-error{% endif %}" type="email" id="business_email" name="business_email" required placeholder="you@company.com" value="{{ form_data.business_email if form_data and form_data.business_email else '' }}">
+                    {% if form_errors and form_errors.business_email %}
+                    <span class="form-error">{{ form_errors.business_email }}</span>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="company_name">Company Name</label>
+                    <input class="form-input{% if form_errors and form_errors.company_name %} input-error{% endif %}" type="text" id="company_name" name="company_name" required placeholder="Your company" value="{{ form_data.company_name if form_data and form_data.company_name else '' }}">
+                    {% if form_errors and form_errors.company_name %}
+                    <span class="form-error">{{ form_errors.company_name }}</span>
+                    {% endif %}
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label" for="country">Country</label>
+                        <select class="form-select{% if form_errors and form_errors.country %} input-error{% endif %}" id="country" name="country" required>
+                            <option value="">Select your country</option>
+                            {% for c in countries %}
+                            <option value="{{ c }}"{% if form_data and form_data.country == c %} selected{% endif %}>{{ c }}</option>
+                            {% endfor %}
+                        </select>
+                        {% if form_errors and form_errors.country %}
+                        <span class="form-error">{{ form_errors.country }}</span>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="service_interested">Service Interested In</label>
+                        <select class="form-select{% if form_errors and form_errors.service_interested %} input-error{% endif %}" id="service_interested" name="service_interested" required>
+                            <option value="">Select a service</option>
+                            {% for service in services %}
+                            <option value="{{ service.title }}"{% if form_data and form_data.service_interested == service.title %} selected{% endif %}>{{ service.title }}</option>
+                            {% endfor %}
+                        </select>
+                        {% if form_errors and form_errors.service_interested %}
+                        <span class="form-error">{{ form_errors.service_interested }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="project_details">Project Details</label>
+                    <textarea class="form-textarea{% if form_errors and form_errors.project_details %} input-error{% endif %}" id="project_details" name="project_details" rows="5" required placeholder="Tell us about your project, goals, and timeline...">{{ form_data.project_details if form_data and form_data.project_details else '' }}</textarea>
+                    {% if form_errors and form_errors.project_details %}
+                    <span class="form-error">{{ form_errors.project_details }}</span>
+                    {% endif %}
+                </div>
+
+                <button type="submit" class="btn-submit btn-primary">Send Inquiry</button>
+            </form>
+        </div>
+    </div>
+</section>

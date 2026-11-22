@@ -1,0 +1,20 @@
+<!-- Products Section -->
+<section class="section-products" id="products">
+    <div class="container">
+        <div class="section-header" data-animate="fade-up">
+            <span class="section-label">INNOVATION LAB</span>
+            <h2>Product Innovation</h2>
+            <p class="section-intro">Beyond client services, Aurocous is investing in its own product vision. We are currently developing independent digital products designed to solve real-world problems at scale.</p>
+        </div>
+        <div class="products-grid">
+            {% for product in products %}
+            <div class="product-card" data-animate="fade-up">
+                <span class="product-badge">{{ product.status }}</span>
+                <h3 class="product-title">{{ product.title }}</h3>
+                <p class="product-description">{{ product.description }}</p>
+            </div>
+            {% endfor %}
+        </div>
+        <p class="products-note" data-animate="fade-up">Our products are currently in active development. We apply the same engineering rigor and design thinking that drives our client work to create products we believe the market truly needs.</p>
+    </div>
+</section>

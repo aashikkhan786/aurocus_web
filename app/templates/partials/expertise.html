@@ -1,0 +1,26 @@
+<!-- Expertise Section -->
+<section class="section-expertise" id="expertise">
+    <div class="container">
+        <div class="section-header" data-animate="fade-up">
+            <span class="section-label">WHAT WE DO</span>
+            <h2>Engineering Solutions for Modern Businesses.</h2>
+            <p class="section-intro">From individual digital experiences to complex software systems, we help businesses turn requirements into reliable technology solutions. Our expertise covers the complete journey from planning and design to development and delivery.</p>
+        </div>
+        <div class="services-grid">
+            {% for service in services %}
+            <div class="service-card" data-animate="fade-up">
+                <div class="service-icon">
+                    {{ service.icon_svg|safe }}
+                </div>
+                <h3 class="service-title">{{ service.title }}</h3>
+                <p class="service-description">{{ service.description }}</p>
+                <div class="service-features">
+                    {% for feature in service.features %}
+                    <span class="feature-tag">{{ feature }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>

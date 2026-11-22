@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aurocous Admin — Inquiries Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --white: #FFFFFF;
+            --cloud-white: #F4F8F6;
+            --deep-navy: #101E28;
+            --electric-blue: #00B865;
+            --cyan: #01856d;
+            --slate: #4E6573;
+            --slate-light: #94A3B8;
+            --border: #E2E8F0;
+            --danger: #EF4444;
+            --danger-bg: #FEF2F2;
+            --success: #10B981;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background: #F8FAFC;
+            color: var(--deep-navy);
+            min-height: 100vh;
+        }
+
+        /* Top Navbar */
+        .admin-nav {
+            background: var(--white);
+            border-bottom: 1px solid var(--border);
+            padding: 16px 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .brand-logo {
+            font-family: 'Manrope', sans-serif;
+            font-size: 22px;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--deep-navy), var(--electric-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+        }
+        .badge {
+            background: var(--cloud-white);
+            color: var(--electric-blue);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            padding: 4px 10px;
+            border-radius: 20px;
+            text-transform: uppercase;
+        }
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .admin-user {
+            font-size: 14px;
+            color: var(--slate);
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+            font-family: inherit;
+        }
+        .btn-outline {
+            border-color: var(--border);
+            color: var(--deep-navy);
+            background: var(--white);
+        }
+        .btn-outline:hover {
+            background: var(--cloud-white);
+            border-color: var(--electric-blue);
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--electric-blue), var(--cyan));
+            color: var(--white);
+        }
+        .btn-primary:hover {
+            opacity: 0.95;
+            box-shadow: 0 4px 12px rgba(40, 100, 215, 0.25);
+        }
+        .btn-danger {
+            background: var(--danger-bg);
+            color: var(--danger);
+            border-color: #FECACA;
+            padding: 6px 12px;
+            font-size: 12px;
+        }
+        .btn-danger:hover {
+            background: var(--danger);
+            color: var(--white);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 32px 24px;
+        }
+
+        /* Metrics */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+            margin-bottom: 32px;
+        }
+        .metric-card {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+        }
+        .metric-label {
+            font-size: 13px;
+            color: var(--slate);
+            font-weight: 500;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .metric-value {
+            font-family: 'Manrope', sans-serif;
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--deep-navy);
+        }
+
+        /* Table Card */
+        .table-card {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+            overflow: hidden;
+        }
+        .table-header {
+            padding: 20px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+        .table-title {
+            font-family: 'Manrope', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+        }
+        .table-responsive {
+            overflow-x: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 14px;
+        }
+        th {
+            background: #F8FAFC;
+            color: var(--slate);
+            font-weight: 600;
+            padding: 14px 20px;
+            border-bottom: 1px solid var(--border);
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+        }
+        td {
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border);
+            vertical-align: middle;
+        }
+        tr:last-child td {
+            border-bottom: none;
+        }
+        tr:hover td {
+            background: #FBFDFF;
+        }
+        .client-name {
+            font-weight: 600;
+            color: var(--deep-navy);
+        }
+        .client-email {
+            font-size: 13px;
+            color: var(--slate);
+        }
+        .service-pill {
+            background: #EFF6FF;
+            color: var(--electric-blue);
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+            display: inline-block;
+            white-space: nowrap;
+        }
+        .date-col {
+            font-size: 12px;
+            color: var(--slate);
+            white-space: nowrap;
+        }
+        .details-btn {
+            color: var(--electric-blue);
+            background: none;
+            border: none;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+        .empty-state {
+            text-align: center;
+            padding: 64px 20px;
+            color: var(--slate);
+        }
+        .empty-state svg {
+            stroke: var(--slate-light);
+            margin-bottom: 16px;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(20, 43, 74, 0.5);
+            backdrop-filter: blur(4px);
+            z-index: 100;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .modal.active {
+            display: flex;
+        }
+        .modal-content {
+            background: var(--white);
+            border-radius: 16px;
+            max-width: 550px;
+            width: 100%;
+            padding: 28px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            animation: modalFadeIn 0.2s ease;
+        }
+        @keyframes modalFadeIn {
+            from { transform: scale(0.95); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+        .modal-title {
+            font-family: 'Manrope', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+        }
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: var(--slate);
+        }
+        .modal-body {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #334155;
+            background: var(--cloud-white);
+            padding: 16px;
+            border-radius: 10px;
+            white-space: pre-wrap;
+            max-height: 350px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+    <header class="admin-nav">
+        <div class="nav-left">
+            <a href="/" class="brand-logo" style="display: flex; align-items: center;">
+                <img src="/static/images/logo.png" alt="Aurocous" style="max-height: 36px; max-width: 160px; object-fit: contain;">
+            </a>
+            <span class="badge">Inbuilt Admin</span>
+        </div>
+        <div class="nav-right">
+            <span class="admin-user">Logged in: <strong>{{ admin_user }}</strong></span>
+            <a href="/" class="btn btn-outline" target="_blank">View Website &rarr;</a>
+            <a href="/admin/logout" class="btn btn-outline">Logout</a>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Metrics -->
+        <section class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-label">Total Inquiries</div>
+                <div class="metric-value">{{ total_leads }}</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Client Companies</div>
+                <div class="metric-value">{{ unique_companies }}</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Active Services Inquired</div>
+                <div class="metric-value">{{ services_count }}</div>
+            </div>
+        </section>
+
+        <!-- Inquiries Table -->
+        <section class="table-card">
+            <div class="table-header">
+                <h2 class="table-title">Recent Contact Inquiries ({{ total_leads }})</h2>
+                <div>
+                    <a href="/admin/export-csv" class="btn btn-primary">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                        Export to CSV
+                    </a>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                {% if inquiries %}
+                <table>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Contact</th>
+                            <th>Company</th>
+                            <th>Country</th>
+                            <th>Service Interested</th>
+                            <th>Project Details</th>
+                            <th>Submitted At</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for inq in inquiries %}
+                        <tr>
+                            <td>{{ inq.id }}</td>
+                            <td>
+                                <div class="client-name">{{ inq.full_name }}</div>
+                                <div class="client-email"><a href="mailto:{{ inq.business_email }}">{{ inq.business_email }}</a></div>
+                            </td>
+                            <td><strong>{{ inq.company_name }}</strong></td>
+                            <td>{{ inq.country }}</td>
+                            <td><span class="service-pill">{{ inq.service_interested }}</span></td>
+                            <td>
+                                <button type="button" class="details-btn" onclick="openDetailsModal('{{ inq.full_name|escape }}', '{{ inq.company_name|escape }}', `{{ inq.project_details|escape }}`)">
+                                    View Message
+                                </button>
+                            </td>
+                            <td class="date-col">{{ inq.created_at }}</td>
+                            <td>
+                                <form action="/admin/inquiries/{{ inq.id }}/delete" method="POST" onsubmit="return confirm('Are you sure you want to delete inquiry #{{ inq.id }}?');">
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                <div class="empty-state">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                    <h3>No inquiries yet</h3>
+                    <p>Submissions from the homepage contact form will automatically appear here in real-time.</p>
+                </div>
+                {% endif %}
+            </div>
+        </section>
+    </main>
+
+    <!-- Project Details Modal -->
+    <div id="detailsModal" class="modal" onclick="if(event.target===this) closeModal();">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modalClientTitle">Project Details</h3>
+                <button type="button" class="close-btn" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="modalDetailsText"></div>
+        </div>
+    </div>
+
+    <script>
+        function openDetailsModal(client, company, details) {
+            document.getElementById('modalClientTitle').textContent = client + ' (' + company + ')';
+            document.getElementById('modalDetailsText').textContent = details;
+            document.getElementById('detailsModal').classList.add('active');
+        }
+        function closeModal() {
+            document.getElementById('detailsModal').classList.remove('active');
+        }
+    </script>
+</body>
+</html>

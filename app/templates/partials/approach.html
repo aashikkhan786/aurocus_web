@@ -1,0 +1,21 @@
+<!-- Approach Section -->
+<section class="section-approach" id="approach">
+    <div class="container">
+        <div class="section-header" data-animate="fade-up">
+            <span class="section-label">HOW WE WORK</span>
+            <h2>A Clear Path from Idea to Implementation.</h2>
+            <p class="section-intro">Good engineering starts with understanding the problem. Our structured approach helps turn business requirements into well-planned, carefully developed digital solutions.</p>
+        </div>
+        <div class="approach-timeline" data-animate="fade-up">
+            {% for step in approach_steps %}
+            <div class="approach-step">
+                <div class="step-number">{{ step.number }}</div>
+                <div class="step-content">
+                    <h3 class="step-title">{{ step.title }}</h3>
+                    <p class="step-description">{{ step.description }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>

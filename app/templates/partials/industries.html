@@ -1,0 +1,21 @@
+<!-- Industries Section -->
+<section class="section-industries" id="industries">
+    <div class="container">
+        <div class="section-header" data-animate="fade-up">
+            <span class="section-label">WHO WE SERVE</span>
+            <h2>Technology for Different Business Environments.</h2>
+            <p class="section-intro">Different industries have different challenges. We focus on understanding each business context and developing software solutions around its operational and customer needs.</p>
+        </div>
+        <div class="industries-grid">
+            {% for industry in industries %}
+            <div class="industry-card" data-animate="fade-up">
+                <div class="industry-icon">
+                    {{ industry.icon_svg|safe }}
+                </div>
+                <h3 class="industry-title">{{ industry.title }}</h3>
+                <p class="industry-description">{{ industry.description }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
